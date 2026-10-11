@@ -178,22 +178,22 @@ struct SettingsView: View {
           Stepper(value: $historySize, in: 1...999) {
             Text("Maximale Einträge: \(historySize)")
           }
-          .onChange(of: historySize) { AppSettings.setHistorySize($0) }
+          .onChange(of: historySize) { AppSettings.setHistorySize(historySize) }
           Stepper(value: $interval, in: 0.2...5.0, step: 0.1) {
             Text("Abfrage-Intervall: \(interval, specifier: "%.1f") s")
           }
-          .onChange(of: interval) { AppSettings.setCheckInterval($0) }
+          .onChange(of: interval) { AppSettings.setCheckInterval(interval) }
           Toggle("Beim Beenden löschen", isOn: $clearOnQuit)
-            .onChange(of: clearOnQuit) { AppSettings.clearOnQuit = $0 }
+            .onChange(of: clearOnQuit) { AppSettings.clearOnQuit = clearOnQuit }
         }
 
         Section("Verhalten") {
           Toggle("Nach Auswahl automatisch einfügen", isOn: $pasteByDefault)
-            .onChange(of: pasteByDefault) { AppSettings.pasteByDefault = $0 }
+            .onChange(of: pasteByDefault) { AppSettings.pasteByDefault = pasteByDefault }
           Picker("Suchmodus", selection: $searchMode) {
             ForEach(SearchMode.allCases, id: \.self) { Text($0.rawValue) }
           }
-          .onChange(of: searchMode) { AppSettings.setSearchMode($0) }
+          .onChange(of: searchMode) { AppSettings.setSearchMode(searchMode) }
         }
 
         Section("Ignorierte Apps (Bundle-IDs)") {
