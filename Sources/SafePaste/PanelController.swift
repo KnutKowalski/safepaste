@@ -123,8 +123,9 @@ final class PanelController: NSObject, NSWindowDelegate {
       }
       return noErr
     }
-    InstallApplicationEventHandler(handler, 1, &spec, nil, &hotKeyHandler)
-
+    // 'InstallApplicationEventHandler' ist ein C-Makro (in Swift nicht verfügbar)
+    // und expandiert zu exakt diesem Aufruf:
+    InstallEventHandler(GetApplicationEventTarget(), handler, 1, &spec, nil, &hotKeyHandler)
     var ref: EventHotKeyRef?
     RegisterEventHotKey(
       UInt32(kVK_ANSI_C),
