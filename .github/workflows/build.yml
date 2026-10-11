@@ -1,0 +1,29 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-app:
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Swift-Version
+        run: swift --version
+
+      - name: Release-Build
+        run: swift build -c release
+
+      - name: App verpacken (.app + ad-hoc-Signatur)
+        run: bash Scripts/package-app.sh
+
+      - name: Artefakt hochladen
+        uses: actions/upload-artifact@v4
+        with:
+          name: SafePaste-macOS
+          path: SafePaste.app.zip
+          if-no-files-found: error
